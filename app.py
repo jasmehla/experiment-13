@@ -8,20 +8,10 @@ load_dotenv()
 
 pymysql.install_as_MySQLdb()
 
+# Update MySQL credentials below
 app = Flask(__name__)
 
-# Update MySQL credentials below
-DB_USER = "root"
-DB_PASSWORD = "Naruto%4012"
-DB_HOST = "localhost"
-DB_NAME = "student_db"
-DB_PORT = "3306"
-
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}"
-    f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    
-)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("MYSQL_PUBLIC_URL").replace("mysql://", "mysql+pymysql://") + "?ssl=true"
 
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
     "pool_pre_ping": True
